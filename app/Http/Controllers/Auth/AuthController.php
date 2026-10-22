@@ -74,4 +74,49 @@ class AuthController extends Controller
             throw new ApiException('Error to active two auth factor: ' . $e->getMessage());
         }
     }
+
+    public function me()
+    {
+        try {
+
+            $data = $this->authService->me();
+            return ReturnApi::success(
+                $data,
+                'User retrieved successfully!',
+                200
+            );
+        } catch(\Exception $e) {
+            throw new ApiException('Error to retrieve user: ' . $e->getMessage());
+        }
+    }
+
+    public function logout()
+    {
+        try {
+
+            $this->authService->logout();
+            return ReturnApi::success(
+                null,
+                'User logged out successfully!',
+                200
+            );
+        } catch(\Exception $e) {
+            throw new ApiException('Error to logout: ' . $e->getMessage());
+        }
+    }
+
+    public function refresh()
+    {
+        try {
+
+            $data = $this->authService->refresh();
+            return ReturnApi::success(
+                $data,
+                'Token refreshed successfully!',
+                200
+            );
+        } catch(\Exception $e) {
+            throw new ApiException('Error to refresh token: ' . $e->getMessage(), 401);
+        }
+    }
 }

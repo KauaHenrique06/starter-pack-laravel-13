@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthService
@@ -68,6 +67,24 @@ class AuthService
         });
     }
 
+    public function me(): UserResource
+    {
+        return new UserResource(auth()->user());
+    }
+
+    public function logout(): void
+    {
+        auth()->logout();
+    }
+
+    public function refresh(): array
+    {
+        return [
+            'token' => auth()->refresh(),
+            'expires_in' => Config::get('jwt.ttl') * 60,
+        ];
+    }
+
     protected function verifyIsActive2fa(User $user): bool
     {
         if ($user->requires_2fa)
@@ -83,6 +100,7 @@ class AuthService
         return [
             'user' => new UserResource($user),
             'token' => JWTAuth::fromUser($user),
+            'expires_in' => Config::get('jwt.ttl') * 60,
             'refresh_in' => Config::get('jwt.refresh_ttl') * 60,
         ];
     }
