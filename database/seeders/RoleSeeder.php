@@ -33,6 +33,6 @@ class RoleSeeder extends Seeder
 
         // Sync all permissions to admin
         Role::findByName('admin', 'api')
-            ->syncPermissions(Permission::where('guard_name', 'api'));
+            ->syncPermissions(Permission::where('guard_name', 'api')->get());
     }
 }
