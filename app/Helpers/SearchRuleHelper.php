@@ -21,10 +21,10 @@ class SearchRuleHelper
         ];
     }
 
-    public static function prepareForValidation($request, $query): array
+    public static function prepareForValidation($request): array
     {
         return [
-            'search' => $request->query($query, '')
+            'search' => $request->query('search', '')
         ];
     }
 }
