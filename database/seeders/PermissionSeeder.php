@@ -8,10 +8,17 @@ use Illuminate\Database\Seeder;
 class PermissionSeeder extends Seeder
 {
     const PERMISSIONS = [
+        // User
         ['name' => 'user.create', 'guard_name' => 'api', 'label' => 'Create user'],
         ['name' => 'user.view', 'guard_name' => 'api', 'label' => 'View user'],
         ['name' => 'user.update', 'guard_name' => 'api', 'label' => 'Update user'],
         ['name' => 'user.delete', 'guard_name' => 'api', 'label' => 'Delete user'],
+
+        // Role
+        ['name' => 'role.create', 'guard_name' => 'api', 'label' => 'Create role'],
+        ['name' => 'role.view', 'guard_name' => 'api', 'label' => 'View role'],
+        ['name' => 'role.update', 'guard_name' => 'api', 'label' => 'Update role'],
+        ['name' => 'role.delete', 'guard_name' => 'api', 'label' => 'Delete role'],
     ];
 
     /**
