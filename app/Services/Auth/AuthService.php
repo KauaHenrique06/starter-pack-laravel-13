@@ -15,7 +15,11 @@ class AuthService
 {
     public function register(array $data): User
     {
-        return DB::transaction(fn () => User::create($data));
+        return DB::transaction(function() use ($data) {
+            $user = User::create($data);
+            $user->assignRole('client');
+            return $user;
+        });
     }
 
     public function login(array $data): array
