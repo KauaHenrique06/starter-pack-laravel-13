@@ -24,7 +24,7 @@ class UserService
                 $user->syncRoles($data['role']);
             }
 
-            return new UserResource($user);
+            return new UserResource($user->load('roles'));
         });
     }
 
@@ -32,13 +32,13 @@ class UserService
     {
         Gate::authorize('viewAny', User::class);
 
-        $user = User::paginate($data['perPage'], ['*'], 'page', $data['page']);
+        $user = User::with('roles')->paginate($data['perPage'], ['*'], 'page', $data['page']);
         return new UserCollection($user);
     }
 
     public function show(array $data): UserResource
     {
-        $user = User::findOrFail($data['id']);
+        $user = User::with('roles')->findOrFail($data['id']);
         Gate::authorize('view', $user);
 
         return new UserResource($user);
@@ -63,7 +63,7 @@ class UserService
                 $user->syncRoles($role);
             }
 
-            return new UserResource($user->refresh());
+            return new UserResource($user->refresh()->load('roles'));
         });
     }
 

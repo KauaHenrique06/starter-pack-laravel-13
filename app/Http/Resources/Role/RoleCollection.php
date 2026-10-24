@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Resources\Role;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+class RoleCollection extends ResourceCollection
+{
+    public $collects = RoleResource::class;
+
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @return array<int|string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'data' => $this->collection,
+            'pagination' => [
+                'current_page' => $this->resource->currentPage(),
+                'from' => $this->resource->firstItem(),
+                'last_page' => $this->resource->lastPage(),
+                'per_page' => $this->resource->perPage(),
+                'to' => $this->resource->lastItem(),
+                'total' => $this->resource->total(),
+            ]
+        ];
+    }
+}
