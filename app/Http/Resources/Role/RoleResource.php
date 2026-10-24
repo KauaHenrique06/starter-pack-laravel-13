@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Role;
 
+use App\Http\Resources\Permission\PermissionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,8 @@ class RoleResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'label' => $this->label,
-            'guard_name' => $this->guard_name
+            'guard_name' => $this->guard_name,
+            'permissions' => PermissionResource::collection($this->whenLoaded('permissions')) 
         ];
     }
 }
