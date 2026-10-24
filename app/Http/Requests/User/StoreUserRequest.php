@@ -45,6 +45,11 @@ class StoreUserRequest extends FormRequest
             'requires_2fa' => [
                 'sometimes',
                 'boolean'
+            ],
+            'role' => [
+                'sometimes',
+                'uuid',
+                'exists:roles,id'
             ]
         ];
     }
@@ -56,6 +61,7 @@ class StoreUserRequest extends FormRequest
             'email' => 'E-mail',
             'password' => 'Password',
             'requires_2fa' => 'Requires two factor auth',
+            'role' => 'Role'
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
@@ -50,6 +51,12 @@ class UpdateUserRequest extends FormRequest
             'requires_2fa' => [
                 'sometimes',
                 'boolean'
+            ],
+            'role' => [
+                'sometimes',
+                'uuid',
+                'exists:roles,id',
+                Rule::prohibitedIf(fn() => !$this->user()->hasRole('admin')) // Blocked for normal user change role for admin
             ]
         ];
     }
@@ -62,6 +69,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'E-mail',
             'password' => 'Password',
             'requires_2fa' => 'Requires two factor auth',
+            'role' => 'Role'
         ];
     }
 
