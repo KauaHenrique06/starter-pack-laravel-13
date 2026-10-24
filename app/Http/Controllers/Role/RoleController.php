@@ -25,7 +25,7 @@ class RoleController extends Controller
                 200
             ); 
         } catch(\Exception $e) {
-            throw new ApiException('Error to index user: ' . $e->getMessage());
+            throw new ApiException('Error to index role: ' . $e->getMessage());
         }
     }
 
@@ -40,7 +40,7 @@ class RoleController extends Controller
                 200
             ); 
         } catch(\Exception $e) {
-            throw new ApiException('Error to show user: ' . $e->getMessage());
+            throw new ApiException('Error to show role: ' . $e->getMessage());
         }
     }
 
@@ -55,7 +55,7 @@ class RoleController extends Controller
                 200
             ); 
         } catch(\Exception $e) {
-            throw new ApiException('Error to update user: ' . $e->getMessage());
+            throw new ApiException('Error to update role: ' . $e->getMessage());
         }
     }
 }

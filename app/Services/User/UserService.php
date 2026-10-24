@@ -79,4 +79,13 @@ class UserService
         DB::transaction(fn () => $user->delete());
     }
 
+    public function assignPermissionToUser(array $data): UserResource
+    {
+        $user = User::findOrFail($data['id']);
+
+        DB::transaction(fn () => $user->syncPermissions($data['permissions']));
+
+        return new UserResource($user->load('roles', 'permissions'));
+    }
+
 }

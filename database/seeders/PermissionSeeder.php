@@ -13,6 +13,7 @@ class PermissionSeeder extends Seeder
         ['name' => 'user.view', 'guard_name' => 'api', 'label' => 'View user'],
         ['name' => 'user.update', 'guard_name' => 'api', 'label' => 'Update user'],
         ['name' => 'user.delete', 'guard_name' => 'api', 'label' => 'Delete user'],
+        ['name' => 'user.assign_permission', 'guard_name' => 'api', 'label' => 'Assign permission to user'],
 
         // Role
         ['name' => 'role.view', 'guard_name' => 'api', 'label' => 'View role'],

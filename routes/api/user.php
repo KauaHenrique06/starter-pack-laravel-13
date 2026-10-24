@@ -9,4 +9,5 @@ Route::middleware('auth:api')->group(function() {
     Route::get('/{id}', [UserController::class, 'show'])->middleware('can:user.view');
     Route::patch('/{id}', [UserController::class, 'update'])->middleware('can:user.update');
     Route::delete('/{id}', [UserController::class, 'delete'])->middleware('can:user.delete');
+    Route::put('/{id}/assign-permission', [UserController::class, 'assignPermissionToUser'])->middleware('can:user.assign_permission');
 });

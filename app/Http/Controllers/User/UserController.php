@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\AssignPermissionToUserRequest;
 use App\Http\Requests\User\DeleteUserRequest;
 use App\Http\Requests\User\IndexUserRequest;
 use App\Http\Requests\User\ShowUserRequest;
@@ -88,6 +89,21 @@ class UserController extends Controller
             ); 
         } catch(\Exception $e) {
             throw new ApiException('Error to delete user: ' . $e->getMessage());
+        }
+    }
+
+    public function assignPermissionToUser(AssignPermissionToUserRequest $request) 
+    {
+        try {
+
+            $data = $this->userService->assignPermissionToUser($request->validated());
+            return ReturnApi::success(
+                $data,
+                'Permission assigned successfully!',
+                200
+            ); 
+        } catch(\Exception $e) {
+            throw new ApiException('Error to assign permission to user: ' . $e->getMessage());
         }
     }
 }
