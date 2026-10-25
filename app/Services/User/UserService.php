@@ -7,8 +7,10 @@ use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -88,4 +90,38 @@ class UserService
         return new UserResource($user->load('roles', 'permissions'));
     }
 
+    public function changePassword(array $data): UserResource
+    {
+        $user = Auth::user();
+
+        if(!Hash::check($data['old_password'], $user->password)) 
+        {
+            throw new ApiException("The old password is incorrect!", 422);
+        }
+
+        if(Hash::check($data['new_password'], $user->password))
+        {
+            throw new ApiException("The new password must be different than old password!", 422);
+        }
+
+        return DB::transaction(function() use ($data, $user) {
+            $user->update([
+                'password' => $data['new_password']
+            ]);
+
+            return new UserResource($user->refresh());
+        });
+    }
+
+    public function resetPassword(array $data): UserResource
+    {
+        $user = User::findOrFail($data['id']);
+        Gate::authorize('resetPassword', User::class);
+
+        return DB::transaction(function() use ($data, $user) {
+            $user->update($data);
+            
+            return new UserResource($user->refresh());
+        });
+    }
 }

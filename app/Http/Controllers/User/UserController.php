@@ -5,8 +5,10 @@ namespace App\Http\Controllers\User;
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\AssignPermissionToUserRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\DeleteUserRequest;
 use App\Http\Requests\User\IndexUserRequest;
+use App\Http\Requests\User\ResetPasswordRequest;
 use App\Http\Requests\User\ShowUserRequest;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
@@ -104,6 +106,36 @@ class UserController extends Controller
             ); 
         } catch(\Exception $e) {
             throw new ApiException('Error to assign permission to user: ' . $e->getMessage());
+        }
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        try {
+
+            $data = $this->userService->changePassword($request->validated());
+            return ReturnApi::success(
+                $data,
+                'Password changed successfully!',
+                200
+            );
+        } catch(\Exception $e) {
+            throw new ApiException('Error to change password: ' . $e->getMessage(), 401);
+        }
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        try {
+
+            $data = $this->userService->resetPassword($request->validated());
+            return ReturnApi::success(
+                $data,
+                'Password reseted successfully!',
+                200
+            );
+        } catch(\Exception $e) {
+            throw new ApiException('Error to reset password: ' . $e->getMessage(), 401);
         }
     }
 }

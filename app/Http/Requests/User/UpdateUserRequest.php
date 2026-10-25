@@ -5,7 +5,6 @@ namespace App\Http\Requests\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -40,14 +39,6 @@ class UpdateUserRequest extends FormRequest
                 'email',
                 'max:255'
             ],
-            'password' => [
-                'sometimes',
-                Password::min(8)
-                    ->mixedCase()
-                    ->numbers()
-                    ->letters()
-                    ->symbols()
-            ],
             'requires_2fa' => [
                 'sometimes',
                 'boolean'
@@ -67,7 +58,6 @@ class UpdateUserRequest extends FormRequest
             'id' => 'User id',
             'name' => 'Name',
             'email' => 'E-mail',
-            'password' => 'Password',
             'requires_2fa' => 'Requires two factor auth',
             'role' => 'Role'
         ];

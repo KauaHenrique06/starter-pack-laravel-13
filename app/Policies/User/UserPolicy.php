@@ -51,4 +51,12 @@ class UserPolicy
     {
         return $authUser->hasRole('admin') || $authUser->id === $user->id;
     }
+
+    /**
+     * Determine wheater the user can reset password the model.
+     */
+    public function resetPassword(User $authUser)
+    {
+        return $authUser->hasRole('admin');
+    }
 }
